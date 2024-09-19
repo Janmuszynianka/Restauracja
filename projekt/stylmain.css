@@ -1,0 +1,171 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f8f9fa;
+    color: #333;
+}
+
+header {
+    background-color: #ff4d4d;
+    padding: 20px;
+    text-align: center;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+header .logo h1 {
+    color: white;
+    font-size: 36px;
+    margin: 0;
+}
+
+nav ul {
+    list-style-type: none;
+    margin-top: 10px;
+}
+
+nav ul li {
+    display: inline;
+    margin: 0 15px;
+}
+
+nav ul li a {
+    color: white;
+    text-decoration: none;
+    font-size: 18px;
+    transition: color 0.3s;
+}
+
+nav ul li a:hover {
+    color: #f1c40f;
+}
+
+main {
+    padding: 50px;
+    text-align: center;
+}
+
+.hero {
+    margin-top: 100px;
+}
+
+.hero h2 {
+    font-size: 48px;
+    color: #ff4d4d;
+}
+
+.hero p {
+    font-size: 24px;
+    color: #555;
+}
+
+footer {
+    background-color: #333;
+    color: white;
+    padding: 20px;
+    text-align: center;
+    position: fixed;
+    width: 100%;
+    bottom: 0;
+}
+/* Dla strony lokalizacji */
+.location {
+    padding: 50px;
+    text-align: center;
+}
+
+.location h2 {
+    font-size: 36px;
+    color: #ff4d4d;
+    margin-bottom: 20px;
+}
+
+.location address {
+    font-style: normal;
+    font-size: 20px;
+    color: #333;
+    margin-bottom: 30px;
+}
+
+.map-container {
+    display: flex;
+    justify-content: center;
+}
+
+.map-container iframe {
+    border: none;
+    width: 100%;
+    max-width: 600px;
+    height: 450px;
+    border-radius: 8px;
+    box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
+}
+/* Stylizacja dla strony płatności */
+.payments {
+    padding: 60px 20px;
+    text-align: center;
+}
+
+.payments h2 {
+    font-size: 36px;
+    color: #ff4d4d;
+    margin-bottom: 20px;
+}
+
+.payments p {
+    font-size: 20px;
+    color: #555;
+    margin-bottom: 40px;
+}
+
+.payment-methods {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 30px;
+    margin-bottom: 40px;
+}
+
+.method {
+    background-color: white;
+    border-radius: 12px;
+    box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    width: 150px;
+    text-align: center;
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.method img {
+    width: 80px;
+    height: auto;
+    margin-bottom: 10px;
+}
+
+.method p {
+    font-size: 16px;
+    color: #333;
+}
+
+.method:hover {
+    transform: scale(1.05);
+    box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+.payment-security {
+    margin-top: 40px;
+}
+
+.payment-security h3 {
+    font-size: 28px;
+    color: #ff4d4d;
+}
+
+.payment-security p {
+    font-size: 18px;
+    color: #555;
+}
