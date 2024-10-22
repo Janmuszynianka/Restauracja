@@ -103,6 +103,36 @@ INSERT INTO `menu_items` (`item_id`, `category_id`, `item_name`, `price`, `descr
 ALTER TABLE `menu_items`
   ADD PRIMARY KEY (`item_id`);
 
+CREATE TABLE `orders` (
+  `order_id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT,
+  `order_date` DATETIME DEFAULT CURRENT_TIMESTAMP,
+  `customer_name` VARCHAR(100) NOT NULL,
+  `customer_address` TEXT NOT NULL,
+  `total_amount` DECIMAL(10, 2) NOT NULL,
+  PRIMARY KEY (`order_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_polish_ci;
+
+CREATE TABLE `order_items` (
+  `order_item_id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT,
+  `order_id` bigint(20) UNSIGNED NOT NULL,
+  `item_id` bigint(20) UNSIGNED NOT NULL,
+  `quantity` INT NOT NULL DEFAULT 1,
+  `price` DECIMAL(10, 2) NOT NULL,
+  PRIMARY KEY (`order_item_id`),
+  FOREIGN KEY (`order_id`) REFERENCES `orders`(`order_id`),
+  FOREIGN KEY (`item_id`) REFERENCES `menu_items`(`item_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_polish_ci;
+
+CREATE TABLE `customers` (
+  `customer_id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT,
+  `name` VARCHAR(100) NOT NULL,
+  `email` VARCHAR(100),
+  `phone` VARCHAR(15),
+  `address` TEXT,
+  PRIMARY KEY (`customer_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_polish_ci;
+
+
 --
 -- AUTO_INCREMENT for dumped tables
 --
