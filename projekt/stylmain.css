@@ -169,3 +169,45 @@ footer {
     font-size: 18px;
     color: #555;
 }
+.menu-items {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px;
+}
+
+.menu-item {
+    border: 1px solid #ddd;
+    padding: 20px;
+    border-radius: 8px;
+    width: 200px;
+    text-align: center;
+}
+
+.menu-item h3 {
+    font-size: 20px;
+    color: #ff4d4d;
+}
+
+.menu-item p {
+    font-size: 16px;
+    color: #555;
+}
+
+.menu-item input {
+    width: 50px;
+    text-align: center;
+}
+
+button {
+    background-color: #ff4d4d;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #e63900;
+}
