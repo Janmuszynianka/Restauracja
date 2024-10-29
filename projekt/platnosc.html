@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FastBite - Płatność</title>
+    <link rel="stylesheet" href="stylmain.css">
+    <script>
+        function processPayment() {
+            // Symulacja przetwarzania płatności
+            setTimeout(() => {
+                // Przekierowanie do strony podsumowania po udanej transakcji
+                window.location.href = 'podsumowanie.php?status=success';
+            }, 2000); // symulacja czasu oczekiwania
+            return false;
+        }
+    </script>
+</head>
+<body>
+    <main>
+        <section class="payment-form">
+            <h2>Podaj dane karty płatniczej</h2>
+            <form onsubmit="return processPayment()" style="max-width: 500px; margin: 0 auto;">
+                <label>Numer Karty:</label>
+                <input type="text" name="card_number" required maxlength="16" pattern="\d{16}" style="width: 100%; padding: 10px; margin-bottom: 15px;">
+
+                <label>Data Ważności (MM/RR):</label>
+                <input type="text" name="expiry_date" required pattern="\d{2}/\d{2}" placeholder="MM/RR" style="width: 100%; padding: 10px; margin-bottom: 15px;">
+
+                <label>CVV:</label>
+                <input type="text" name="cvv" required maxlength="3" pattern="\d{3}" style="width: 100%; padding: 10px; margin-bottom: 15px;">
+
+                <button type="submit" style="width: 100%; padding: 12px; background-color: #4CAF50; color: white; font-weight: bold;">Zapłać</button>
+            </form>
+        </section>
+    </main>
+</body>
+</html>

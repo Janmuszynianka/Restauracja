@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kontakt - Restauracja</title>
+    <link rel="stylesheet" href="styles.css"> <!-- Odnośnik do pliku CSS -->
+</head>
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li><a href="index.html">Strona Główna</a></li>
+                <li><a href="menu.html">Menu</a></li>
+                <li><a href="o-nas.html">O Nas</a></li>
+                <li><a href="kontakt.html">Kontakt</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <div class="container">
+            <h1>Kontakt</h1>
+
+            <section class="contact-info">
+                <h2>Informacje kontaktowe</h2>
+                <p><strong>Adres:</strong> ul. Przykładowa 123, 00-000 Miasto</p>
+                <p><strong>Telefon:</strong> +48 123 456 789</p>
+                <p><strong>Email:</strong> kontakt@restauracja.pl</p>
+                <p><strong>Godziny otwarcia:</strong><br>
+                    Poniedziałek - Piątek: 10:00 - 22:00<br>
+                    Sobota - Niedziela: 12:00 - 24:00
+                </p>
+            </section>
+
+            <section class="contact-form">
+                <h2>Formularz kontaktowy</h2>
+                <form action="/wyslij-formularz" method="POST">
+                    <label for="name">Imię i nazwisko:</label>
+                    <input type="text" id="name" name="name" required>
+
+                    <label for="email">Adres email:</label>
+                    <input type="email" id="email" name="email" required>
+
+                    <label for="message">Wiadomość:</label>
+                    <textarea id="message" name="message" rows="5" required></textarea>
+
+                    <button type="submit">Wyślij wiadomość</button>
+                </form>
+            </section>
+        </div>
+    </main>
+
+    <footer>
+        <p>&copy; 2024 Restauracja. Wszystkie prawa zastrzeżone.</p>
+    </footer>
+</body>
+</html>
