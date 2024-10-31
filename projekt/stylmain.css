@@ -136,15 +136,23 @@ footer {
     box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
     padding: 20px;
     width: 150px;
+    height: 150px; /* Ustalamy równą wysokość dla divów */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
     text-align: center;
     transition: transform 0.3s, box-shadow 0.3s;
 }
 
 .method img {
-    width: 80px;
-    height: auto;
-    margin-bottom: 10px;
+    max-width: 100%;
+    max-height: 80px; /* Ustalamy maksymalną wysokość, aby dopasować do kontenera */
+    object-fit: contain;
+    display: block;
+    margin: 0 auto; /* Wyśrodkowanie dla pewności */
 }
+
 
 .method p {
     font-size: 16px;
@@ -175,7 +183,6 @@ footer {
     justify-content: center;
     gap: 20px;
 }
-
 .menu-item {
     border: 1px solid #ddd;
     padding: 20px;
@@ -183,20 +190,52 @@ footer {
     width: 200px;
     text-align: center;
 }
-
 .menu-item h3 {
     font-size: 20px;
     color: #ff4d4d;
 }
+.menu-item p {
+    font-size: 16px;
+    color: #555;
+}
+.menu-item input {
+    width: 50px;
+    text-align: center;
+}
+
+
+.item-details {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.menu-item h4 {
+    font-size: 24px;
+    color: #ff4d4d;
+    margin: 0;
+}
 
 .menu-item p {
+    font-size: 18px;
+    color: #333;
+    margin: 5px 0;
+}
+
+.menu-item label {
     font-size: 16px;
     color: #555;
 }
 
 .menu-item input {
-    width: 50px;
+    width: 60px;
     text-align: center;
+    margin-left: 10px;
+}
+
+.menu-item:hover {
+    transform: scale(1.02);
+    box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
 }
 
 button {
@@ -213,7 +252,7 @@ button:hover {
 }
 /* Ogólny wygląd formularza */
 form {
-    max-width: 500px;
+    max-width: auto;
     margin: 0 auto;
     padding: 20px;
     background-color: #f4f4f9;
@@ -264,4 +303,8 @@ form button {
 
 form button:hover {
     background-color: #45a049;
+}
+#mastercard{
+    width: 100px;
+    height: auto;
 }

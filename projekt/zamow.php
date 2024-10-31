@@ -1,18 +1,16 @@
 <?php
-
+// Połączenie z bazą danych
 $host = 'localhost';
 $db = 'restauracja';
 $user = 'root';
 $password = '';
-
 $conn = new mysqli($host, $user, $password, $db);
-
 if ($conn->connect_error) {
     die("Połączenie nieudane: " . $conn->connect_error);
 }
 
 // Krok 1: Wyświetlanie menu i dodawanie produktów do koszyka
-if (!isset($_POST['checkout']) && !isset($_POST['confirm_order'])) {}
+if (!isset($_POST['checkout']) && !isset($_POST['confirm_order']) && !isset($_POST['payment'])) {
     ?>
     <!DOCTYPE html>
     <html lang="pl">
@@ -37,7 +35,6 @@ if (!isset($_POST['checkout']) && !isset($_POST['confirm_order'])) {}
                 </ul>
             </nav>
         </header>
-
         <main>
             <section class="menu">
                 <h2>Zamów swoje ulubione danie</h2>
@@ -60,7 +57,6 @@ if (!isset($_POST['checkout']) && !isset($_POST['confirm_order'])) {}
                         }
                         ?>
                     </div>
-
                     <!-- Napoje -->
                     <h3>Napoje</h3>
                     <div class="menu-items">
@@ -79,7 +75,6 @@ if (!isset($_POST['checkout']) && !isset($_POST['confirm_order'])) {}
                         }
                         ?>
                     </div>
-
                     <!-- Desery -->
                     <h3>Desery</h3>
                     <div class="menu-items">
@@ -98,14 +93,135 @@ if (!isset($_POST['checkout']) && !isset($_POST['confirm_order'])) {}
                         }
                         ?>
                     </div>
-
                     <button type="submit" name="checkout">Złóż zamówienie</button>
                 </form>
             </section>
         </main>
-
         <footer>
             <p>&copy; 2024 RESTAURONT. Wszelkie prawa zastrzeżone.</p>
         </footer>
     </body>
     </html>
+    <?php
+}
+
+// Krok 2: Podsumowanie koszyka i formularz z danymi kontaktowymi oraz płatnością
+elseif (isset($_POST['checkout'])) {
+    ?>
+    <!DOCTYPE html>
+    <html lang="pl">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>FastBite - Potwierdzenie zamówienia</title>
+        <link rel="stylesheet" href="stylmain.css">
+    </head>
+    <body>
+        <header>
+            <div class="logo">
+                <h1>RESTAURONT</h1>
+            </div>
+        </header>
+        <main>
+            <section class="order-summary">
+                <h2>Podsumowanie zamówienia</h2>
+                <form method="post" action="" style="width: auto">
+                    <ul>
+                    <?php
+                    $total_amount = 0;
+                    if (isset($_POST['items']) && is_array($_POST['items'])) {
+                        foreach ($_POST['items'] as $item_id => $quantity) {
+                            if ($quantity > 0) {
+                                $sql_item = "SELECT item_name, price FROM menu_items WHERE item_id = $item_id";
+                                $result = $conn->query($sql_item);
+                                if ($result) {
+                                    $row = $result->fetch_assoc();
+                                    $item_name = $row['item_name'];
+                                    $price = $row['price'];
+                                    $total_price = $price * $quantity;
+                                    $total_amount += $total_price;
+                                    echo "<li>$item_name x $quantity - $total_price PLN</li>";
+                                    echo "<input type='hidden' name='items[$item_id]' value='$quantity'>";
+                                }
+                            }
+                        }
+                    } else {
+                        echo "<li>Brak wybranych pozycji.</li>";
+                    }
+                    ?>
+                    </ul>
+                    <p>Łączna kwota: <?php echo $total_amount; ?> PLN</p>
+                    
+                    <!-- Dane kontaktowe -->
+                    <h3>Podaj dane kontaktowe</h3>
+                    <label>Imię i nazwisko: <input type="text" name="customer_name" required></label><br>
+                    <label>Adres: <textarea name="customer_address" required></textarea></label><br>
+                    <label>Telefon: <input type="text" name="customer_phone" required></label><br>
+
+                    <!-- Metoda płatności -->
+                    <h3>Wybierz metodę płatności</h3>
+                    <label><input type="radio" name="payment_method" value="gotowka" required> Gotówka przy odbiorze</label><br>
+                    <label><input type="radio" name="payment_method" value="karta" required> Karta kredytowa</label><br>
+
+                    <!-- Dane karty kredytowej (opcjonalnie wyświetlane, jeśli wybrano "karta") -->
+                    <div id="card-info" style="display: none;">
+                        <label>Numer karty: <input type="text" name="card_number" pattern="\d{16}" maxlength="16" placeholder="0000 0000 0000 0000"></label><br>
+                        <label>Data ważności: <input type="text" name="expiry_date" placeholder="MM/RR" pattern="\d{2}/\d{2}"></label><br>
+                        <label>CVV: <input type="text" name="cvv" pattern="\d{3}" maxlength="3" placeholder="123"></label><br>
+                    </div>
+
+                    <input type="hidden" name="total_amount" value="<?php echo $total_amount; ?>">
+                    <button type="submit" name="confirm_order">Potwierdź zamówienie</button>
+                </form>
+            </section>
+        </main>
+        <footer>
+            <p>&copy; 2024 RESTAURONT. Wszelkie prawa zastrzeżone.</p>
+        </footer>
+
+        <script>
+        // Pokazanie danych karty, jeśli wybrano płatność kartą
+        document.querySelectorAll('input[name="payment_method"]').forEach((element) => {
+            element.addEventListener('change', function() {
+                document.getElementById('card-info').style.display = this.value === 'karta' ? 'block' : 'none';
+            });
+        });
+        </script>
+    </body>
+    </html>
+    <?php
+}
+
+// Krok 3: Strona z podziękowaniem za zamówienie
+elseif (isset($_POST['confirm_order'])) {
+    ?>
+    <!DOCTYPE html>
+    <html lang="pl">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>FastBite - Dziękujemy za zamówienie</title>
+        <link rel="stylesheet" href="stylmain.css">
+        <meta http-equiv="refresh" content="5;url=index.html">
+    </head>
+    <body>
+        <header>
+            <div class="logo">
+                <h1>RESTAURONT</h1>
+            </div>
+        </header>
+        <main>
+            <section class="thank-you">
+                <h2>Dziękujemy za złożenie zamówienia!</h2>
+                <p>Twoje zamówienie zostało pomyślnie złożone i jest w trakcie realizacji.</p>
+                <p>Za chwilę nastąpi przekierowanie na stronę główną...</p>
+            </section>
+        </main>
+        <footer>
+            <p>&copy; 2024 RESTAURONT. Wszelkie prawa zastrzeżone.</p>
+        </footer>
+    </body>
+    </html>
+    <?php
+}
+?>
