@@ -162,6 +162,30 @@ elseif (isset($_POST['checkout'])) {
                     <h3>Wybierz metodę płatności</h3>
                     <label><input type="radio" name="payment_method" value="gotowka" required> Gotówka przy odbiorze</label><br>
                     <label><input type="radio" name="payment_method" value="karta" required> Karta kredytowa</label><br>
+                    <label><input type="radio" name="payment_method" value="blik" required> BLIK</label><br>
+                    <h3>Wprowadź kod Blik</h3>
+<label>Kod BLIK: <input type="text" name="blik_code" id="blik_code" pattern="\d{6}" maxlength="6" placeholder="123456" required></label><br>
+<p id="blik-validation-message"></p>
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    const blikCodeInput = document.getElementById('blik_code');
+    const blikValidationMessage = document.getElementById('blik-validation-message');
+
+    blikCodeInput.addEventListener('input', function () {
+        const blikCode = blikCodeInput.value;
+
+        // Sprawdzanie, czy kod ma dokładnie 6 cyfr
+        if (blikCode.length === 6 && /^\d{6}$/.test(blikCode)) {
+            blikValidationMessage.textContent = "Kod BLIK jest prawidłowy";
+            blikValidationMessage.style.color = "green";
+        } else {
+            blikValidationMessage.textContent = "Kod BLIK musi zawierać 6 cyfr";
+            blikValidationMessage.style.color = "red";
+        }
+    });
+});
+</script>
 
                     <!-- Dane karty kredytowej (opcjonalnie wyświetlane, jeśli wybrano "karta") -->
                     <div id="card-info" style="display: none;">
@@ -191,7 +215,6 @@ elseif (isset($_POST['checkout'])) {
     </html>
     <?php
 }
-
 // Krok 3: Strona z podziękowaniem za zamówienie
 elseif (isset($_POST['confirm_order'])) {
     ?>
@@ -214,12 +237,41 @@ elseif (isset($_POST['confirm_order'])) {
             <section class="thank-you">
                 <h2>Dziękujemy za złożenie zamówienia!</h2>
                 <p>Twoje zamówienie zostało pomyślnie złożone i jest w trakcie realizacji.</p>
+                <p>Szacowany czas oczekiwania na zamówienie: <span id="time-remaining">20:00</span> minut.</p>
                 <p>Za chwilę nastąpi przekierowanie na stronę główną...</p>
             </section>
         </main>
         <footer>
             <p>&copy; 2024 RESTAURONT. Wszelkie prawa zastrzeżone.</p>
         </footer>
+
+        <script>
+            // Licznik czasu oczekiwania (20 minut)
+            let minutes = 20;
+            let seconds = 0;
+
+            function updateTimer() {
+                const timerElement = document.getElementById('time-remaining');
+                
+                if (seconds === 0 && minutes > 0) {
+                    minutes--;
+                    seconds = 59;
+                } else if (seconds > 0) {
+                    seconds--;
+                }
+
+                // Wyświetlanie czasu w formacie MM:SS
+                timerElement.textContent = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+                
+                // Ustawienie zakończenia odliczania na zero
+                if (minutes === 0 && seconds === 0) {
+                    clearInterval(countdownInterval);
+                }
+            }
+
+            // Aktualizacja licznika co sekundę
+            const countdownInterval = setInterval(updateTimer, 1000);
+        </script>
     </body>
     </html>
     <?php
